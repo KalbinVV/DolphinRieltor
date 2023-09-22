@@ -20,7 +20,8 @@ class Events:
         server_addresses_map = {
             'Google': ('https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga', 22),
             'Google (Спутник)': ('https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga', 22),
-            'OpenStreetMap': ('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', None)
+            'OpenStreetMap': ('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', None),
+            'ЧБ': ('https://tiles.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}.png', None)
         }
 
         address, zoom_value = server_addresses_map[server_value]

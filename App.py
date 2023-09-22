@@ -92,7 +92,8 @@ class App(customtkinter.CTk):
                                                                 values=[
                                                                     "Google",
                                                                     "Google (Спутник)",
-                                                                    "OpenStreetMap"],
+                                                                    "OpenStreetMap",
+                                                                    "ЧБ"],
                                                                 corner_radius=0,
                                                                 command=Events.on_server_change)
 
