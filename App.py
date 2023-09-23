@@ -46,6 +46,8 @@ class App(customtkinter.CTk):
 
         self.__right_frame: Optional[customtkinter.CTkFrame] = None
 
+        self.__center_frame: Optional[customtkinter.CTkFrame] = None
+
         self.__init_map()
         self.__init_upper_panel()
         self.__init_server_choose_panel()
@@ -62,8 +64,7 @@ class App(customtkinter.CTk):
         self.__map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
         self.__map_widget.add_right_click_menu_command("Добавить здание",
-                                                       command=lambda x: print(
-                                                           tkintermapview.convert_coordinates_to_address(x[0], x[1])),
+                                                       command=self.__on_apartment_add,
                                                        pass_coords=True)
 
     def __init_upper_panel(self):
@@ -174,6 +175,53 @@ class App(customtkinter.CTk):
             self.__map_widget.set_tile_server(address, max_zoom=zoom_value)
         else:
             self.__map_widget.set_tile_server(address)
+
+    def __on_apartment_add(self, coordinates: tuple[int, int]):
+        x, y = coordinates
+
+        location = tkintermapview.convert_coordinates_to_address(x, y)
+
+        self.__center_frame = customtkinter.CTkFrame(self, width=600, height=400, fg_color='white')
+
+        self.__center_frame.place(relx=0.5, rely=0.5, anchor='c', relwidth=0.7, relheight=0.7)
+
+        inputs_frames = customtkinter.CTkScrollableFrame(self.__center_frame,
+                                                         width=600,
+                                                         height=380,
+                                                         fg_color="white")
+
+        inputs_frames.pack(expand=1, fill="both")
+
+        country_entry = Utils.create_input_frame(inputs_frames, width=600, height=20, fg_color='white',
+                                                 text="Страна: ", placeholder_text="Введите страну")
+
+        state_entry = Utils.create_input_frame(inputs_frames, width=600, height=20, fg_color='white',
+                                               text="Область: ", placeholder_text="Введите область")
+        postal_index_entry = Utils.create_input_frame(inputs_frames, width=600, height=20, fg_color='white',
+                                                      text="Почтовый индекс: ",
+                                                      placeholder_text="Введите почтовый индекс")
+        city_entry = Utils.create_input_frame(inputs_frames, width=600, height=20, fg_color='white',
+                                              text="Город:", placeholder_text="Введите город")
+        street_entry = Utils.create_input_frame(inputs_frames, width=600, height=20, fg_color='white',
+                                                text="Улица: ", placeholder_text="Введите улицу")
+        home_entry = Utils.create_input_frame(inputs_frames, width=600, height=20, fg_color='white',
+                                              text="Дом: ", placeholder_text="Введите дом")
+
+        country_entry.insert(0, location.country if location.city else "")
+        state_entry.insert(0, location.state if location.state else "")
+        postal_index_entry.insert(0, location.postal if location.postal else "")
+        city_entry.insert(0, location.city if location.city else "")
+        street_entry.insert(0, location.street if location.street else "")
+        home_entry.insert(0, location.housenumber if location.housenumber else "")
+
+        close_button = customtkinter.CTkButton(inputs_frames,
+                                               width=40,
+                                               height=40,
+                                               text="Закрыть",
+                                               command=lambda: self.__center_frame.destroy(),
+                                               corner_radius=0)
+
+        close_button.pack(expand=1, fill="x")
 
     def start(self):
         self.mainloop()
