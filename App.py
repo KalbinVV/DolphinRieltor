@@ -53,6 +53,8 @@ class App(customtkinter.CTk):
 
         self.__map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
+        self.__map_widget.add_right_click_menu_command("")
+
     def __init_upper_panel(self):
         self.__upper_frame = customtkinter.CTkFrame(master=self, width=700, height=30)
 
