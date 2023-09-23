@@ -56,7 +56,7 @@ class App(customtkinter.CTk):
     def __init_upper_panel(self):
         self.__upper_frame = customtkinter.CTkFrame(master=self, width=700, height=30)
 
-        self.__upper_frame.place(relx=0.5, rely=0.02, anchor='n')
+        self.__upper_frame.place(relx=0.5, rely=0.02, anchor='n', relwidth=0.7)
 
         self.__search_entry = customtkinter.CTkEntry(self.__upper_frame,
                                                      width=400,
@@ -74,7 +74,8 @@ class App(customtkinter.CTk):
                                                 font=('monospace', 14),
                                                 command=Events.on_search)
 
-        self.__search_entry.pack(side=tkinter.LEFT)
+        self.__search_entry.pack(side=tkinter.LEFT, fill="both", expand=1)
+
         search_button.pack(side=tkinter.RIGHT)
 
     def __init_server_choose_panel(self):
