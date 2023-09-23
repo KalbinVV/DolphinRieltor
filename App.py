@@ -1,3 +1,4 @@
+import os.path
 import tkinter
 from typing import Optional
 
@@ -53,7 +54,9 @@ class App(customtkinter.CTk):
 
         self.__map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
-        self.__map_widget.add_right_click_menu_command("")
+        self.__map_widget.add_right_click_menu_command("Добавить здание",
+                                                       command=lambda x: print(tkintermapview.convert_coordinates_to_address(x[0], x[1])),
+                                                       pass_coords=True)
 
     def __init_upper_panel(self):
         self.__upper_frame = customtkinter.CTkFrame(master=self, width=700, height=30)
@@ -73,7 +76,7 @@ class App(customtkinter.CTk):
                                                 height=30,
                                                 text='Поиск',
                                                 corner_radius=0,
-                                                font=('monospace', 14),
+                                                font=(self.MAIN_FONT_FAMILY, 14),
                                                 command=Events.on_search)
 
         self.__search_entry.pack(side=tkinter.LEFT, fill="both", expand=1)
