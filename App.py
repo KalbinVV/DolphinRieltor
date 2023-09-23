@@ -76,7 +76,6 @@ class App(customtkinter.CTk):
                                                 height=30,
                                                 text='Поиск',
                                                 corner_radius=0,
-                                                font=(self.MAIN_FONT_FAMILY, 14),
                                                 command=Events.on_search)
 
         self.__search_entry.pack(side=tkinter.LEFT, fill="both", expand=1)
@@ -112,8 +111,7 @@ class App(customtkinter.CTk):
         self.__left_frame.place(relx=0.02, rely=0.45, anchor='w')
 
         search_label = customtkinter.CTkLabel(self.__left_frame,
-                                              text="Настройки поиска:",
-                                              font=('monospace', 14))
+                                              text="Настройки поиска:")
 
         search_label.pack(padx=10, pady=10, anchor="w")
 
