@@ -4,6 +4,7 @@ from typing import Optional
 
 import customtkinter
 import tkintermapview
+from PIL import Image
 
 from Events import Events
 
@@ -40,10 +41,13 @@ class App(customtkinter.CTk):
 
         self.__left_frame: Optional[customtkinter.CTkFrame] = None
 
+        self.__right_frame: Optional[customtkinter.CTkFrame] = None
+
         self.__init_map()
         self.__init_upper_panel()
         self.__init_server_choose_panel()
         self.__init_left_panel()
+        self.__init_right_panel()
 
     def __init_map(self):
         self.__map_widget = tkintermapview.TkinterMapView(self, width=self.WIDTH, height=self.HEIGHT,
@@ -55,7 +59,8 @@ class App(customtkinter.CTk):
         self.__map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=22)
 
         self.__map_widget.add_right_click_menu_command("Добавить здание",
-                                                       command=lambda x: print(tkintermapview.convert_coordinates_to_address(x[0], x[1])),
+                                                       command=lambda x: print(
+                                                           tkintermapview.convert_coordinates_to_address(x[0], x[1])),
                                                        pass_coords=True)
 
     def __init_upper_panel(self):
@@ -84,9 +89,8 @@ class App(customtkinter.CTk):
 
     def __init_server_choose_panel(self):
         self.__server_choose_frame = customtkinter.CTkFrame(master=self,
-                                                   width=100,
-                                                   height=300,
-                                                   fg_color='white')
+                                                            width=100,
+                                                            height=300)
 
         self.__server_choose_frame.place(relx=0.02, rely=0.9, anchor='sw')
 
@@ -106,7 +110,7 @@ class App(customtkinter.CTk):
         self.__server_option_menu.pack()
 
     def __init_left_panel(self):
-        self.__left_frame = customtkinter.CTkFrame(self, width=100, height=700, fg_color='white')
+        self.__left_frame = customtkinter.CTkFrame(self, width=100, height=700)
 
         self.__left_frame.place(relx=0.02, rely=0.45, anchor='w')
 
@@ -127,6 +131,22 @@ class App(customtkinter.CTk):
         search_apartments_switch.pack(padx=10, pady=10, anchor="w")
         search_homes_switch.pack(padx=10, pady=10, anchor="w")
         search_already_rented.pack(padx=10, pady=10, anchor="w")
+
+    def __init_right_panel(self):
+        self.__right_frame = customtkinter.CTkFrame(self, width=50, height=400)
+
+        self.__right_frame.place(relx=0.98, rely=0.3, anchor='e')
+
+        switch_appearance_img = customtkinter.CTkImage(light_image=Image.open(os.path.join("assets", "thunder.png")),
+                                                       size=(24, 24))
+        switch_appearance_button = customtkinter.CTkButton(self.__right_frame,
+                                                           width=24,
+                                                           height=24,
+                                                           image=switch_appearance_img,
+                                                           text="",
+                                                           corner_radius=0)
+
+        switch_appearance_button.pack()
 
     def get_search_value(self):
         return self.__search_entry.get()
