@@ -150,7 +150,8 @@ class App(customtkinter.CTk):
                                              corner_radius=0,
                                              anchor="w",
                                              fg_color="white",
-                                             text_color="black")
+                                             text_color="black",
+                                             hover_color='#e7e7e7')
 
             button.pack(expand=1, fill="both", padx=10, pady=10)
 
