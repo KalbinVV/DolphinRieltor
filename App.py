@@ -6,6 +6,7 @@ import customtkinter
 import tkintermapview
 from PIL import Image
 
+import Utils
 from Events import Events
 
 
@@ -26,6 +27,8 @@ class App(customtkinter.CTk):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        customtkinter.set_appearance_mode('light')
 
         self.title(App.APP_NAME)
         self.geometry(str(App.WIDTH) + "x" + str(App.HEIGHT))
@@ -90,7 +93,8 @@ class App(customtkinter.CTk):
     def __init_server_choose_panel(self):
         self.__server_choose_frame = customtkinter.CTkFrame(master=self,
                                                             width=100,
-                                                            height=300)
+                                                            height=300,
+                                                            fg_color='white')
 
         self.__server_choose_frame.place(relx=0.02, rely=0.9, anchor='sw')
 
@@ -110,7 +114,7 @@ class App(customtkinter.CTk):
         self.__server_option_menu.pack()
 
     def __init_left_panel(self):
-        self.__left_frame = customtkinter.CTkFrame(self, width=100, height=700)
+        self.__left_frame = customtkinter.CTkFrame(self, width=100, height=700, fg_color='white')
 
         self.__left_frame.place(relx=0.02, rely=0.45, anchor='w')
 
@@ -135,18 +139,25 @@ class App(customtkinter.CTk):
     def __init_right_panel(self):
         self.__right_frame = customtkinter.CTkFrame(self, width=50, height=400)
 
-        self.__right_frame.place(relx=0.98, rely=0.3, anchor='e')
+        self.__right_frame.place(relx=0.98, rely=0.45, anchor='e')
 
-        switch_appearance_img = customtkinter.CTkImage(light_image=Image.open(os.path.join("assets", "thunder.png")),
-                                                       size=(24, 24))
-        switch_appearance_button = customtkinter.CTkButton(self.__right_frame,
-                                                           width=24,
-                                                           height=24,
-                                                           image=switch_appearance_img,
-                                                           text="",
-                                                           corner_radius=0)
+        def add_right_panel_button(text: str, image_name: str) -> None:
+            button = customtkinter.CTkButton(self.__right_frame,
+                                             image=Utils.get_ctk_image(image_name, (24, 24)),
+                                             text=text,
+                                             width=24,
+                                             height=24,
+                                             corner_radius=0,
+                                             anchor="w",
+                                             fg_color="white",
+                                             text_color="black")
 
-        switch_appearance_button.pack()
+            button.pack(expand=1, fill="both")
+
+        add_right_panel_button("Поиск объекта", image_name="magnifying-glass.png")
+        add_right_panel_button("База данных", image_name="database.png")
+        add_right_panel_button("Журнал", image_name="log.png")
+        add_right_panel_button("Клиенты", image_name="user.png")
 
     def get_search_value(self):
         return self.__search_entry.get()
