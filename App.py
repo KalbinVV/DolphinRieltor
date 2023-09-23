@@ -137,7 +137,7 @@ class App(customtkinter.CTk):
         search_already_rented.pack(padx=10, pady=10, anchor="w")
 
     def __init_right_panel(self):
-        self.__right_frame = customtkinter.CTkFrame(self, width=50, height=400)
+        self.__right_frame = customtkinter.CTkFrame(self, width=50, height=400, fg_color='white')
 
         self.__right_frame.place(relx=0.98, rely=0.45, anchor='e')
 
@@ -152,7 +152,7 @@ class App(customtkinter.CTk):
                                              fg_color="white",
                                              text_color="black")
 
-            button.pack(expand=1, fill="both")
+            button.pack(expand=1, fill="both", padx=10, pady=10)
 
         add_right_panel_button("Поиск объекта", image_name="magnifying-glass.png")
         add_right_panel_button("База данных", image_name="database.png")
